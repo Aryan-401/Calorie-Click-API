@@ -40,15 +40,12 @@ st.table(
     }
 )
 st.write("Upload an image of food to classify")
-uploaded_file = st.file_uploader("Choose a file", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("Choose a file", type=["jpg", "jpeg"])
 if uploaded_file is not None:
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
     input_image = Image.open(uploaded_file)
-    file_extension = uploaded_file.name.split(".")[-1].upper()
-    if file_extension == "JPG":
-        file_extension = "JPEG"
     buffered = io.BytesIO()
-    input_image.save(buffered, format=file_extension)
+    input_image.save(buffered, format="JPEG")
     img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
     print(img_str)
     with st.spinner("This may take a while depending if the model is loaded or not. Please be patient."):
